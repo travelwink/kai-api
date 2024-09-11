@@ -1,0 +1,9 @@
+
+${AnsiColor.GREEN}(= ^ᆺ^)ﾉ                        ${AnsiColor.CYAN}(ฅ'ω'ฅ)${AnsiColor.DEFAULT}
+  ${AnsiBackground.RED}${AnsiStyle.BOLD}${AnsiColor.BLACK}     _     ___   _      ____  _     _         _      __    _     ${AnsiStyle.NORMAL}${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT} ${AnsiColor.RED}❤${AnsiColor.DEFAULT}
+  ${AnsiBackground.RED}${AnsiStyle.BOLD}${AnsiColor.BLACK}    | |   / / \ \ \  / | |_  | |   \ \_/     | |_/  / /\  | |    ${AnsiStyle.NORMAL}${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}        ${AnsiColor.MAGENTA}(=ↀωↀ=)${AnsiColor.DEFAULT}
+  ${AnsiBackground.RED}${AnsiStyle.BOLD}${AnsiColor.BLACK}    |_|__ \_\_/  \_\/  |_|__ |_|__  |_|      |_| \ /_/--\ |_|    ${AnsiStyle.NORMAL}${AnsiColor.DEFAULT}${AnsiBackground.DEFAULT}
+  ${AnsiBackground.RED}                                                                 ${AnsiBackground.DEFAULT}
+                      ${AnsiColor.YELLOW}(●ↀωↀ●)✧.
+${AnsiColor.BLUE}  :: Spring Boot ::                                        ${AnsiColor.WHITE}(v${spring-boot.version})${AnsiColor.DEFAULT}
+${version}

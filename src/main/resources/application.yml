@@ -1,0 +1,19 @@
+server:
+  port: 8808
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: kai
+  profiles:
+    default: dev
+  output:
+    ansi:
+      enabled: always
+  cloud:
+    config:
+      enabled: false
+logging:
+  file:
+    name: logs/${spring.application.name}.log
