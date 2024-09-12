@@ -6,4 +6,3 @@ ${AnsiColor.GREEN}(= ^ᆺ^)ﾉ                        ${AnsiColor.CYAN}(ฅ'ω'�
   ${AnsiBackground.RED}                                                                 ${AnsiBackground.DEFAULT}
                       ${AnsiColor.YELLOW}(●ↀωↀ●)✧.
 ${AnsiColor.BLUE}  :: Spring Boot ::                                        ${AnsiColor.WHITE}(v${spring-boot.version})${AnsiColor.DEFAULT}
-${version}

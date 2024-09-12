@@ -1,3 +1,8 @@
+import org.springframework.boot.gradle.tasks.run.BootRun
+
+println("=======================================================")
+println(project.name)
+
 plugins {
     java
     id("org.springframework.boot") version "3.3.3"
@@ -7,7 +12,7 @@ plugins {
 
 group = "com.travelwink"
 version = "0.0.1-SNAPSHOT"
-
+println(project.version)
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -50,6 +55,8 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0")
 
+    implementation("com.baomidou:mybatis-plus-boot-starter:3.5.7")
+
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 //    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
@@ -84,3 +91,8 @@ tasks.asciidoctor {
     inputs.dir(project.extra["snippetsDir"]!!)
     dependsOn(tasks.test)
 }
+
+tasks.withType<BootRun> {
+    systemProperty("spring.profiles.active", "prod")
+}
+
