@@ -32,13 +32,15 @@ repositories {
 extra["snippetsDir"] = file("build/generated-snippets")
 extra["springBootAdminVersion"] = "3.3.3"
 extra["springCloudVersion"] = "2023.0.3"
-
+configurations.all {
+    exclude(group = "commons-collections", module = "commons-collections")
+}
 dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-amqp")
 //    implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-mail")
-    implementation("org.springframework.boot:spring-boot-starter-security")
+//    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
@@ -50,6 +52,16 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
+
+    /** Apache Shiro */
+    // springboot3 需要加 jakarta 来替换 javax
+//	implementation("org.apache.shiro:shiro-core:2.0.1:jakarta")
+//	implementation("org.apache.shiro:shiro-web:2.0.1:jakarta")
+//	implementation("org.apache.shiro:shiro-spring:2.0.1:jakarta")
+    // 加了下面这两个会与spring-boot-starter-actuator冲突
+//	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.1:jakarta")
+//	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.1:jakarta")
+    implementation("org.apache.commons:commons-collections4:4.4")
 
     /** API DOC */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")

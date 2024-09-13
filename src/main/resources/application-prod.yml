@@ -1,3 +1,6 @@
+springdoc:
+  api-docs:
+    enabled: false
 spring:
   data:
     redis:

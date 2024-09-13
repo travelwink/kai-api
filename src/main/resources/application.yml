@@ -2,7 +2,28 @@ server:
   port: 8808
   servlet:
     context-path: /api
-
+management:
+  endpoints:
+    web:
+      base-path: /rest/actuator
+      exposure:
+        include: '*'
+springdoc:
+  version: 3.1
+  api-docs:
+    version: openapi_3_1
+  swagger-ui:
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+    use-root-path: true
+  show-actuator: true
+  group-configs:
+    - group: user
+      paths-to-match: /user/**
+  cache:
+    disabled: true
 spring:
   application:
     name: kai
