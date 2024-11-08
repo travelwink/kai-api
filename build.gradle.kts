@@ -72,6 +72,7 @@ dependencies {
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.9")
     implementation("com.baomidou:mybatis-plus-jsqlparser:3.5.9")
 
+    implementation("org.fusesource.jansi:jansi:2.4.1")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
 //    developmentOnly("org.springframework.boot:spring-boot-docker-compose")
