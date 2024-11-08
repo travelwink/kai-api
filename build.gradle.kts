@@ -42,6 +42,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-mail")
 //    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("de.codecentric:spring-boot-admin-starter-client")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
@@ -67,7 +68,9 @@ dependencies {
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0")
 
-    implementation("com.baomidou:mybatis-plus-boot-starter:3.5.7")
+    /** DB */
+    implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.9")
+    implementation("com.baomidou:mybatis-plus-jsqlparser:3.5.9")
 
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

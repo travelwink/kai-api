@@ -1,4 +1,4 @@
-package com.travelwink.kai.utils;
+package com.travelwink.kai.framework.utils;
 
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;

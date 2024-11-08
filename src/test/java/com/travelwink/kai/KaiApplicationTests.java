@@ -1,6 +1,6 @@
 package com.travelwink.kai;
 
-import com.travelwink.kai.utils.JwtUtil;
+import com.travelwink.kai.framework.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
