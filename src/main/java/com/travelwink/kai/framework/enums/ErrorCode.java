@@ -30,6 +30,8 @@ public enum ErrorCode {
 
     TOO_MANY_RESULTS_EXCEPTION(50002, "数据异常：查询到的结果过多"),
 
+    BUSINESS_EXCEPTION(50003, "业务逻辑异常:"),
+
     ;
     private final int code;
     private final String desc;

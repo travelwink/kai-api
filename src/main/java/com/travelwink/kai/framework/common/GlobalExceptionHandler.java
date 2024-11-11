@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.travelwink.kai.framework.enums.ErrorCode;
+import com.travelwink.kai.framework.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.shiro.authc.AuthenticationException;
@@ -83,6 +84,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(TooManyResultsException.class)
     public ResponseEntity<ApiResult<String>> handleTooManyResultsException(TooManyResultsException e) {
         ApiResult<String> result = ApiResult.fail(ErrorCode.TOO_MANY_RESULTS_EXCEPTION, e.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ApiResult<String>> handleBusinessException(BusinessException e) {
+        ApiResult<String> result = ApiResult.fail(ErrorCode.BUSINESS_EXCEPTION, e.getMessage());
         return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

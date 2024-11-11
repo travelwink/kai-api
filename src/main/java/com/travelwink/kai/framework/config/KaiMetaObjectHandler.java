@@ -15,13 +15,17 @@ public class KaiMetaObjectHandler implements MetaObjectHandler {
         if (ObjectUtils.isEmpty(status)) {
             setFieldValByName("status", 1, metaObject);
         }
-        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+        // todo 从Redis中获取用户ID
         this.strictInsertFill(metaObject, "createdBy", String.class, "init");
+        this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now());
+        this.strictInsertFill(metaObject, "updatedBy", String.class, "init");
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
+        // todo 从Redis中获取用户ID
+        this.strictUpdateFill(metaObject, "updatedBy", String.class, "init");
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now());
     }
 }
