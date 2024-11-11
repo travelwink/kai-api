@@ -3,11 +3,6 @@ package com.travelwink.kai.system.controller;
 import com.travelwink.kai.system.entity.User;
 import com.travelwink.kai.system.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.Explode;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
-import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -52,7 +47,7 @@ public class UserController {
     )
     @PostMapping("/create")
     public ResponseEntity<Boolean> create(@Validated @RequestBody User user) {
-        return ResponseEntity.ok(userService.save(user)) ;
+        return ResponseEntity.ok(userService.createUser(user));
     }
 
     @Operation(summary = "获取用户列表")

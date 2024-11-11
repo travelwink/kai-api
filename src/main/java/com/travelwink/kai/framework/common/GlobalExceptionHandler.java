@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.travelwink.kai.framework.enums.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.exceptions.TooManyResultsException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -25,7 +27,7 @@ import java.util.List;
 public class GlobalExceptionHandler {
 
     /**
-     * 处理请求数据校验异常
+     * 处理请求数据校验异常(400 客户端异常)
      * @param e MethodArgumentNotValidException
      * @return ResponseEntity
      */
@@ -52,7 +54,18 @@ public class GlobalExceptionHandler {
     }
 
     /**
-     * 处理资源未被找到异常
+     * 处理身份验证失败异常(401 客户端异常)
+     * @param e MethodArgumentNotValidException
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResult<String>> handleAuthenticationException(AuthenticationException e) {
+        ApiResult<String> result = ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+    }
+
+    /**
+     * 处理资源未被找到异常(404 客户端异常)
      * @param e MethodArgumentNotValidException
      * @return ResponseEntity
      */
@@ -61,4 +74,16 @@ public class GlobalExceptionHandler {
         ApiResult<String> result = ApiResult.fail(ErrorCode.NO_RESOURCE_FOUND, e.getMessage());
         return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
     }
+
+    /**
+     * 处理数据过多异常(500 服务器内部错误)
+     * @param e TooManyResultsException
+     * @return ResponseEntity
+     */
+    @ExceptionHandler(TooManyResultsException.class)
+    public ResponseEntity<ApiResult<String>> handleTooManyResultsException(TooManyResultsException e) {
+        ApiResult<String> result = ApiResult.fail(ErrorCode.TOO_MANY_RESULTS_EXCEPTION, e.getMessage());
+        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

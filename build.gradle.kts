@@ -43,10 +43,13 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    implementation("de.codecentric:spring-boot-admin-starter-client")
+
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+    // admin-client 包含 actuator
+//    implementation("de.codecentric:spring-boot-admin-starter-client")
 
     /** JWT */
 //	implementation("com.auth0:java-jwt:4.4.0")
@@ -56,12 +59,12 @@ dependencies {
 
     /** Apache Shiro */
     // springboot3 需要加 jakarta 来替换 javax
-//	implementation("org.apache.shiro:shiro-core:2.0.1:jakarta")
-//	implementation("org.apache.shiro:shiro-web:2.0.1:jakarta")
-//	implementation("org.apache.shiro:shiro-spring:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-core:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-web:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-spring:2.0.1:jakarta")
     // 加了下面这两个会与spring-boot-starter-actuator冲突
-//	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.1:jakarta")
-//	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.1:jakarta")
     implementation("org.apache.commons:commons-collections4:4.4")
 
     /** API DOC */
