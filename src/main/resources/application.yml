@@ -21,8 +21,12 @@ springdoc:
     use-root-path: true
   show-actuator: true
   group-configs:
-    - group: user
+    - group: Framework
+      paths-to-match: /login
+    - group: System
       paths-to-match: /user/**
+    - group: Business
+      paths-to-match: /biz
   cache:
     disabled: true
 

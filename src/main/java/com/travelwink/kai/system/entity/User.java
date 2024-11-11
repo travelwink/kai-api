@@ -1,5 +1,6 @@
 package com.travelwink.kai.system.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -66,11 +67,11 @@ public class User extends BaseEntity {
     private String remark;
 
     @Schema(example = "1", description = "状态: 0 禁用, 1 启用, 2 锁定",  defaultValue = "1")
-    @NotNull(message = "状态不能为空")
+    @TableField(fill = FieldFill.INSERT)
     private Integer status;
 
     @Schema(description = "组织ID集合")
-    @NotEmpty(message = "组织ID结合不能为空")
+    @NotEmpty(message = "组织ID集合不能为空")
     @TableField(exist = false)
     private Set<String> orgIds;
 
