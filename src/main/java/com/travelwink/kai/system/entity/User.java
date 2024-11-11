@@ -51,13 +51,13 @@ public class User extends BaseEntity {
     private String salt;
 
     @Schema(description = "手机号码")
-    private String phone;
+    private String mobile;
 
     @Schema(example = "1", description = "0:未知, 1:男, 2:女", defaultValue = "0")
     private Integer gender;
 
-    @Schema(description = "头像")
-    private String head;
+    @Schema(description = "虚拟形象")
+    private String avatar;
 
     @Schema(description = "电子邮箱地址", example = "john@email.com")
     private String email;
@@ -67,7 +67,7 @@ public class User extends BaseEntity {
 
     @Schema(example = "1", description = "状态: 0 禁用, 1 启用, 2 锁定",  defaultValue = "1")
     @NotNull(message = "状态不能为空")
-    private Integer state;
+    private Integer status;
 
     @Schema(description = "组织ID集合")
     @NotEmpty(message = "组织ID结合不能为空")

@@ -19,6 +19,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ApiResult<Boolean> login(@Validated @RequestBody LoginParam param) {
-        return ApiResult.ok(loginService.login(param));
+        loginService.login(param);
+        return ApiResult.ok();
     }
 }

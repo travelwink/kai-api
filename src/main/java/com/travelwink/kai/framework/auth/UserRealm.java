@@ -35,9 +35,9 @@ public class UserRealm extends AuthorizingRealm {
         String name = token.getPrincipal().toString();
         User user = userService.getByUsername(name);
         if (ObjectUtils.isEmpty(user)) {
+            log.error("There is no user with username of {}", token.getPrincipal());
             throw new UnknownAccountException();
         }
-        log.error("There is no user with username of {}", token.getPrincipal());
         return new SimpleAuthenticationInfo(
                 token.getPrincipal(),
                 user.getPassword(),

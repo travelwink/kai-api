@@ -8,6 +8,7 @@ management:
       base-path: /rest/actuator
       exposure:
         include: '*'
+
 springdoc:
   version: 3.1
   api-docs:
@@ -24,6 +25,27 @@ springdoc:
       paths-to-match: /user/**
   cache:
     disabled: true
+
+############################# spring common config end ###############################
+shiro:
+  crypto:
+    hash-algorithm: SHA-256
+    hash-iterations: 3
+  loginUrl: /login
+  # Let Shiro Manage the sessions
+  userNativeSessionManager: true
+  # disable URL session rewriting
+  sessionManager:
+    sessionIdUrlRewritingEnabled: false
+  anon:
+    - /hello
+    - /login,/logout
+    - /static/**,/templates/**
+    - /error
+    - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
+    - /user/**
+
+
 spring:
   application:
     name: kai
