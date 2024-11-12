@@ -21,6 +21,11 @@ public enum ErrorCode {
     AUTHENTICATION_FAILED(40102, "身份验证失败"),
 
     /**
+     * {@code 403xx} Forbidden 扩展异常编码.
+     */
+    UNAUTHORIZED(40301, "授权失败, 禁止访问"),
+
+    /**
      * {@code 404xx} Not Found 扩展异常编码.
      */
     NO_RESOURCE_FOUND(40401, "请求的资源不存在"),

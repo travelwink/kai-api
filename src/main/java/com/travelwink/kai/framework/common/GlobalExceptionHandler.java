@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -77,6 +78,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiResult<String> handleAuthenticationException(AuthenticationException e) {
         return ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
+    }
+
+    /**
+     * 处理授权失败异常(403 客户端异常)
+     * @param e UnauthorizedException
+     * @return ApiResult
+     */
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResult<String> handleUnauthorizedException(UnauthorizedException e) {
+        return ApiResult.fail(ErrorCode.UNAUTHORIZED, e.getMessage());
     }
 
     /**
