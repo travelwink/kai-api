@@ -1,27 +1,56 @@
 package com.travelwink.kai.framework.auth;
 
 import com.travelwink.kai.system.entity.User;
-import com.travelwink.kai.system.service.UserService;
+import com.travelwink.kai.system.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.lang.util.ByteSource;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
+import java.util.Set;
+
 @Slf4j
-@Configuration
+@Component
 public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PermissionService permissionService;
+
+    @Autowired
+    private RelUserRoleService relUserRoleService;
+
+    @Autowired
+    private RelRolePermissionService relRolePermissionService;
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        return null;
+        // 获取用户名
+        String username =  principals.getPrimaryPrincipal().toString();
+
+        // 查询用户角色和权限
+        String userId = userService.getByUsername(username).getId();
+        Set<String> roleIds = relUserRoleService.getRoleIdListByUserId(userId);
+        Set<String> roleCodes = roleService.getCodeByIds(roleIds);
+
+        Set<String> permissionIds = relRolePermissionService.getPermissionIdsByRoleIds(roleIds);
+        Set<String> permissionCodes = permissionService.getPermissionCodesByIds(permissionIds);
+
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        authorizationInfo.addRoles(roleCodes);
+        authorizationInfo.addStringPermissions(permissionCodes);
+        return authorizationInfo;
     }
 
     /**

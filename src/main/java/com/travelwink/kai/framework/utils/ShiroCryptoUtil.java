@@ -25,8 +25,8 @@ public class ShiroCryptoUtil {
     public static String generateSalt() {
         SecureRandomNumberGenerator randomNumberGenerator = new SecureRandomNumberGenerator();
         ByteSource salt = randomNumberGenerator.nextBytes(16);
-        log.info("Generated salt is {}", salt.toBase64());
-        return salt.toBase64();
+        log.info("Generated salt is {}", salt.toHex());
+        return salt.toHex();
     }
 
     /**

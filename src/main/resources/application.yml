@@ -47,7 +47,6 @@ shiro:
     - /static/**,/templates/**
     - /error
     - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
-    - /user/**
 
 
 spring:

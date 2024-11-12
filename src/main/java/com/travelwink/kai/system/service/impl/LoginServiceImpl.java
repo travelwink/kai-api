@@ -19,4 +19,9 @@ public class LoginServiceImpl implements LoginService {
         AuthenticationToken token = new UsernamePasswordToken(param.getUsername(), param.getPassword());
         subject.login(token);
     }
+
+    @Override
+    public void logout() {
+        SecurityUtils.getSubject().logout();
+    }
 }

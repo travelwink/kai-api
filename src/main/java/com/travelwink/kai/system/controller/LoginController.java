@@ -24,4 +24,9 @@ public class LoginController {
         loginService.login(param);
         return ApiResult.ok();
     }
+
+    public ApiResult<Boolean> logout() {
+        loginService.logout();
+        return ApiResult.ok();
+    }
 }

@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -46,12 +47,14 @@ public class UserController {
             }
     )
     @PostMapping("/create")
+    @RequiresPermissions("sys:user:create")
     public ResponseEntity<Boolean> create(@Validated @RequestBody User user) {
         return ResponseEntity.ok(userService.createUser(user));
     }
 
     @Operation(summary = "获取用户列表")
     @GetMapping("/getList")
+    @RequiresPermissions("sys:user:list")
     public ResponseEntity<List<User>> getList() {
         return ResponseEntity.ok(userService.list());
     }

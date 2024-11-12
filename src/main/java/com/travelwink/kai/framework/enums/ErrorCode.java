@@ -16,7 +16,9 @@ public enum ErrorCode {
     /**
      * {@code 401xx} Unauthorized 扩展异常编码.
      */
-    AUTHENTICATION_FAILED(40101, "身份验证失败"),
+    UNAUTHENTICATED(40101, "未经认证或未登录"),
+
+    AUTHENTICATION_FAILED(40102, "身份验证失败"),
 
     /**
      * {@code 404xx} Not Found 扩展异常编码.

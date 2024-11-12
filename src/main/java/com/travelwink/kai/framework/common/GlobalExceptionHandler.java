@@ -8,6 +8,7 @@ import com.travelwink.kai.framework.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -15,6 +16,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -30,10 +32,11 @@ public class GlobalExceptionHandler {
     /**
      * 处理请求数据校验异常(400 客户端异常)
      * @param e MethodArgumentNotValidException
-     * @return ResponseEntity
+     * @return ApiResult
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResult<List<String>>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResult<List<String>> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         BindingResult bindingResult = e.getBindingResult();
         List<String> list = new ArrayList<>();
         List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -47,50 +50,66 @@ public class GlobalExceptionHandler {
             ApiResult<List<String>> result = ApiResult.fail(ErrorCode.METHOD_ARGUMENT_NOT_VALID, list);
             String resultString = objectMapper.writeValueAsString(result);
             log.warn("{} : {}", HttpStatus.BAD_REQUEST.value(), resultString);
-            return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+            return result;
         } catch (JsonProcessingException exception) {
             log.error(e.getMessage());
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return ApiResult.fail(ErrorCode.METHOD_ARGUMENT_NOT_VALID, list);
+    }
+
+    /**
+     * 处理未经认证/登录异常(401 客户端异常)
+     * @param e UnauthenticatedException
+     * @return ApiResult
+     */
+    @ExceptionHandler(UnauthenticatedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiResult<String> handleUnauthenticatedException(UnauthenticatedException e) {
+        return ApiResult.fail(ErrorCode.UNAUTHENTICATED, e.getMessage());
     }
 
     /**
      * 处理身份验证失败异常(401 客户端异常)
-     * @param e MethodArgumentNotValidException
-     * @return ResponseEntity
+     * @param e AuthenticationException
+     * @return ApiResult
      */
     @ExceptionHandler(AuthenticationException.class)
-    public ResponseEntity<ApiResult<String>> handleAuthenticationException(AuthenticationException e) {
-        ApiResult<String> result = ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
-        return new ResponseEntity<>(result, HttpStatus.UNAUTHORIZED);
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiResult<String> handleAuthenticationException(AuthenticationException e) {
+        return ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
     }
 
     /**
      * 处理资源未被找到异常(404 客户端异常)
-     * @param e MethodArgumentNotValidException
-     * @return ResponseEntity
+     * @param e NoResourceFoundException
+     * @return ApiResult
      */
     @ExceptionHandler(NoResourceFoundException.class)
-    public ResponseEntity<ApiResult<String>> handleNoResourceFoundException(NoResourceFoundException e) {
-        ApiResult<String> result = ApiResult.fail(ErrorCode.NO_RESOURCE_FOUND, e.getMessage());
-        return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiResult<String> handleNoResourceFoundException(NoResourceFoundException e) {
+        return ApiResult.fail(ErrorCode.NO_RESOURCE_FOUND, e.getMessage());
     }
 
     /**
      * 处理数据过多异常(500 服务器内部错误)
      * @param e TooManyResultsException
-     * @return ResponseEntity
+     * @return ApiResult
      */
     @ExceptionHandler(TooManyResultsException.class)
-    public ResponseEntity<ApiResult<String>> handleTooManyResultsException(TooManyResultsException e) {
-        ApiResult<String> result = ApiResult.fail(ErrorCode.TOO_MANY_RESULTS_EXCEPTION, e.getMessage());
-        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResult<String> handleTooManyResultsException(TooManyResultsException e) {
+        return ApiResult.fail(ErrorCode.TOO_MANY_RESULTS_EXCEPTION, e.getMessage());
     }
 
+    /**
+     * 处理业务逻辑异常(500 服务器内部错误)
+     * @param e BusinessException
+     * @return ApiResult
+     */
     @ExceptionHandler(BusinessException.class)
-    public ResponseEntity<ApiResult<String>> handleBusinessException(BusinessException e) {
-        ApiResult<String> result = ApiResult.fail(ErrorCode.BUSINESS_EXCEPTION, e.getMessage());
-        return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiResult<String> handleBusinessException(BusinessException e) {
+        return ApiResult.fail(ErrorCode.BUSINESS_EXCEPTION, e.getMessage());
     }
 
 }
