@@ -5,7 +5,7 @@ println(project.name)
 
 plugins {
     java
-    id("org.springframework.boot") version "3.3.3"
+    id("org.springframework.boot") version "3.4.0"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
@@ -30,8 +30,8 @@ repositories {
 }
 
 extra["snippetsDir"] = file("build/generated-snippets")
-extra["springBootAdminVersion"] = "3.3.3"
-extra["springCloudVersion"] = "2023.0.3"
+extra["springBootAdminVersion"] = "3.4.0"
+extra["springCloudVersion"] = "2024.0.0"
 configurations.all {
     exclude(group = "commons-collections", module = "commons-collections")
 }
@@ -59,12 +59,12 @@ dependencies {
 
     /** Apache Shiro */
     // springboot3 需要加 jakarta 来替换 javax
-	implementation("org.apache.shiro:shiro-core:2.0.1:jakarta")
-	implementation("org.apache.shiro:shiro-web:2.0.1:jakarta")
-	implementation("org.apache.shiro:shiro-spring:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-core:2.0.2:jakarta")
+	implementation("org.apache.shiro:shiro-web:2.0.2:jakarta")
+	implementation("org.apache.shiro:shiro-spring:2.0.2:jakarta")
     // 加了下面这两个会与spring-boot-starter-actuator冲突
-	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.1:jakarta")
-	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.1:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.2:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.2:jakarta")
     implementation("org.apache.commons:commons-collections4:4.4")
 
     /** API DOC */
