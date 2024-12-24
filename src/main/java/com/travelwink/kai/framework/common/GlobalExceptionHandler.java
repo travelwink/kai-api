@@ -7,10 +7,11 @@ import com.travelwink.kai.framework.enums.ErrorCode;
 import com.travelwink.kai.framework.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.exceptions.TooManyResultsException;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.apache.shiro.authz.UnauthorizedException;
+//import org.apache.shiro.authc.AuthenticationException;
+//import org.apache.shiro.authz.UnauthenticatedException;
+//import org.apache.shiro.authz.UnauthorizedException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -62,33 +63,44 @@ public class GlobalExceptionHandler {
      * @param e UnauthenticatedException
      * @return ApiResult
      */
-    @ExceptionHandler(UnauthenticatedException.class)
+    @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ApiResult<String> handleUnauthenticatedException(UnauthenticatedException e) {
+    public ApiResult<String> handleUnauthenticatedException(AuthenticationException e) {
         return ApiResult.fail(ErrorCode.UNAUTHENTICATED, e.getMessage());
     }
 
-    /**
-     * 处理身份验证失败异常(401 客户端异常)
-     * @param e AuthenticationException
-     * @return ApiResult
-     */
-    @ExceptionHandler(AuthenticationException.class)
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public ApiResult<String> handleAuthenticationException(AuthenticationException e) {
-        return ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
-    }
+//    /**
+//     * 处理未经认证/登录异常(401 客户端异常)
+//     * @param e UnauthenticatedException
+//     * @return ApiResult
+//     */
+//    @ExceptionHandler(UnauthenticatedException.class)
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    public ApiResult<String> handleUnauthenticatedException(UnauthenticatedException e) {
+//        return ApiResult.fail(ErrorCode.UNAUTHENTICATED, e.getMessage());
+//    }
 
-    /**
-     * 处理授权失败异常(403 客户端异常)
-     * @param e UnauthorizedException
-     * @return ApiResult
-     */
-    @ExceptionHandler(UnauthorizedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ApiResult<String> handleUnauthorizedException(UnauthorizedException e) {
-        return ApiResult.fail(ErrorCode.UNAUTHORIZED, e.getMessage());
-    }
+//    /**
+//     * 处理身份验证失败异常(401 客户端异常)
+//     * @param e AuthenticationException
+//     * @return ApiResult
+//     */
+//    @ExceptionHandler(AuthenticationException.class)
+//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+//    public ApiResult<String> handleAuthenticationException(AuthenticationException e) {
+//        return ApiResult.fail(ErrorCode.AUTHENTICATION_FAILED, e.getMessage());
+//    }
+//
+//    /**
+//     * 处理授权失败异常(403 客户端异常)
+//     * @param e UnauthorizedException
+//     * @return ApiResult
+//     */
+//    @ExceptionHandler(UnauthorizedException.class)
+//    @ResponseStatus(HttpStatus.FORBIDDEN)
+//    public ApiResult<String> handleUnauthorizedException(UnauthorizedException e) {
+//        return ApiResult.fail(ErrorCode.UNAUTHORIZED, e.getMessage());
+//    }
 
     /**
      * 处理资源未被找到异常(404 客户端异常)

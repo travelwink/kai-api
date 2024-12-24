@@ -40,7 +40,7 @@ dependencies {
 //    implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-mail")
-//    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 
@@ -49,6 +49,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
     // admin-client 包含 actuator
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 //    implementation("de.codecentric:spring-boot-admin-starter-client")
 
     /** JWT */
@@ -58,14 +59,14 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
     /** Apache Shiro */
-    // springboot3 需要加 jakarta 来替换 javax
-	implementation("org.apache.shiro:shiro-core:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-web:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-spring:2.0.2:jakarta")
-    // 加了下面这两个会与spring-boot-starter-actuator冲突
-	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.2:jakarta")
-    implementation("org.apache.commons:commons-collections4:4.4")
+//    // springboot3 需要加 jakarta 来替换 javax
+//	implementation("org.apache.shiro:shiro-core:2.0.2:jakarta")
+//	implementation("org.apache.shiro:shiro-web:2.0.2:jakarta")
+//	implementation("org.apache.shiro:shiro-spring:2.0.2:jakarta")
+//    // 加了下面这两个会与spring-boot-starter-actuator冲突
+//	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.2:jakarta")
+//	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.2:jakarta")
+//    implementation("org.apache.commons:commons-collections4:4.4")
 
     /** API DOC */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")

@@ -3,17 +3,30 @@ package com.travelwink.kai.system.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.travelwink.kai.framework.exception.BusinessException;
-import com.travelwink.kai.framework.utils.ShiroCryptoUtil;
+//import com.travelwink.kai.framework.utils.ShiroCryptoUtil;
+import com.travelwink.kai.system.entity.Role;
 import com.travelwink.kai.system.entity.User;
 import com.travelwink.kai.system.mapper.UserMapper;
+import com.travelwink.kai.system.service.RelUserRoleService;
+import com.travelwink.kai.system.service.RoleService;
 import com.travelwink.kai.system.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
+import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
+    @Autowired
+    RelUserRoleService relUserRoleService;
+
+    @Autowired
+    RoleService roleService;
 
     @Override
     public boolean createUser(User user) {
@@ -24,8 +37,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
 
         // 密码加密处理
-        user.setSalt(ShiroCryptoUtil.generateSalt());
-        user.setPassword(ShiroCryptoUtil.encryptPassword(user.getPassword(), user.getSalt()));
+//        user.setSalt(ShiroCryptoUtil.generateSalt());
+//        user.setPassword(ShiroCryptoUtil.encryptPassword(user.getPassword(), user.getSalt()));
 
         return super.save(user);
     }
@@ -34,7 +47,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getByUsername(String username) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername, username);
-        return super.getOne(queryWrapper);
+        User user = super.getOne(queryWrapper);
+        if (!ObjectUtils.isEmpty(user)) {
+            Set<String> roleIds = relUserRoleService.getRoleIdListByUserId(user.getId());
+            user.setRoleList(roleService.listByIds(roleIds));
+        }
+        return user;
     }
 
     @Override

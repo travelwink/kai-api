@@ -18,9 +18,9 @@ public class RelUserRoleServiceImpl extends ServiceImpl<RelUserRoleMapper, RelUs
     @Override
     public Set<String> getRoleIdListByUserId(String userId) {
         LambdaQueryWrapper<RelUserRole> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(RelUserRole::getFkUserId, userId);
-        queryWrapper.select(RelUserRole::getFkRoleId);
+        queryWrapper.eq(RelUserRole::getUserId, userId);
+        queryWrapper.select(RelUserRole::getRoleId);
         List<RelUserRole> relUserRoleList = super.list(queryWrapper);
-        return relUserRoleList.stream().map(RelUserRole::getFkRoleId).collect(Collectors.toSet());
+        return relUserRoleList.stream().map(RelUserRole::getRoleId).collect(Collectors.toSet());
     }
 }

@@ -11,11 +11,12 @@ import java.util.UUID;
 @Slf4j
 public class JwtUtil {
 
-    public static String createToken(String subject, int ttlSeconds) {
+    public static String generateToken(String subject, int ttlSeconds) {
         SecretKey key = Jwts.SIG.HS256.key().build();
         log.info("Secret key format is {}", key.getFormat());
         log.info("Secret key encode is {}", key.getEncoded());
         log.info("Secret key algorithm is {}", key.getAlgorithm());
+
         String jws = Jwts.builder()
                 .header()
                 .keyId(UUID.randomUUID().toString())

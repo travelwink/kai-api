@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -61,6 +62,8 @@ public class User extends BaseEntity {
     private String avatar;
 
     @Schema(description = "电子邮箱地址", example = "john@email.com")
+    @Pattern(regexp = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",
+            message = "邮箱格式不正确")
     private String email;
 
     @Schema(description = "备注")
@@ -71,7 +74,6 @@ public class User extends BaseEntity {
     private Integer status;
 
     @Schema(description = "组织ID集合")
-    @NotEmpty(message = "组织ID集合不能为空")
     @TableField(exist = false)
     private Set<String> orgIds;
 
@@ -79,6 +81,10 @@ public class User extends BaseEntity {
     @NotEmpty(message = "角色ID集合不能为空")
     @TableField(exist = false)
     private Set<String> roleIds;
+
+    @Schema(description = "角色集合")
+    @TableField(exist = false)
+    private List<Role> roleList;
 
     @Schema(description = "头衔/称号 ID集合")
     @TableField(exist = false)

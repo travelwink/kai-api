@@ -9,7 +9,7 @@ class KaiApplicationTests {
 
     @Test
     void contextLoads() {
-        String jwtToken = JwtUtil.createToken("admin", 60 * 60);
+        String jwtToken = JwtUtil.generateToken("admin", 60 * 60);
         System.out.println(jwtToken);
     }
 
