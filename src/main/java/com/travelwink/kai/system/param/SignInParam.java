@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @Schema(description = "登录参数")
-public class LoginParam implements Serializable {
+public class SignInParam implements Serializable {
 
     @Schema(description = "用户名", example = "admin")
     @NotBlank(message = "用户名不可为空")
