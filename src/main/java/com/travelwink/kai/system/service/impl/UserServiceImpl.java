@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.travelwink.kai.framework.exception.BusinessException;
 //import com.travelwink.kai.framework.utils.ShiroCryptoUtil;
-import com.travelwink.kai.system.entity.Role;
+import com.travelwink.kai.framework.pagination.PageModel;
+import com.travelwink.kai.framework.pagination.PageResult;
 import com.travelwink.kai.system.entity.User;
 import com.travelwink.kai.system.mapper.UserMapper;
+import com.travelwink.kai.system.param.UserPageParam;
 import com.travelwink.kai.system.service.RelUserRoleService;
 import com.travelwink.kai.system.service.RoleService;
 import com.travelwink.kai.system.service.UserService;
@@ -15,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.List;
 import java.util.Set;
 
 @Slf4j
@@ -27,6 +28,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Autowired
     RoleService roleService;
+
+    @Autowired
+    UserMapper userMapper;
 
     @Override
     public boolean createUser(User user) {
@@ -51,6 +55,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!ObjectUtils.isEmpty(user)) {
             Set<String> roleIds = relUserRoleService.getRoleIdListByUserId(user.getId());
             user.setRoleList(roleService.listByIds(roleIds));
+        } else {
+            throw new BusinessException("用户名不存在");
         }
         return user;
     }
@@ -62,4 +68,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return super.exists(queryWrapper);
     }
 
+    @Override
+    public PageResult<User> getPageList(UserPageParam userPageParam) {
+        PageModel<User> pageModel = new PageModel<>(userPageParam);
+        PageModel<User> pageResult = userMapper.getPageList(pageModel, userPageParam);
+        return new PageResult<>(pageResult);
+    }
 }

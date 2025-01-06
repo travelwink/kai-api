@@ -28,9 +28,9 @@ public class AuthController {
     }
 
     @PostMapping("/signIn")
-    public ApiResult<Boolean> login(@Validated @RequestBody SignInParam param) {
-        boolean resultFlag = authService.signIn(param);
-        return ApiResult.result(resultFlag);
+    public ApiResult<String> signIn(@Validated @RequestBody SignInParam param) {
+        String jwtToken = authService.signIn(param);
+        return ApiResult.ok(jwtToken);
     }
 
     @GetMapping("/signOut")

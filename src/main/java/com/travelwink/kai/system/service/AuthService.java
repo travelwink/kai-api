@@ -7,7 +7,7 @@ public interface AuthService {
 
     boolean signUp(SignUpParam param);
 
-    boolean signIn(SignInParam param);
+    String signIn(SignInParam param);
 
     void signOut();
 }

@@ -1,4 +1,4 @@
-package com.travelwink.kai.framework.config;
+package com.travelwink.kai.framework.shiro;
 
 //import com.travelwink.kai.framework.auth.JwtCredentialsMatcher;
 //import com.travelwink.kai.framework.auth.JwtRealm;
