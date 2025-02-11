@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserMapper extends BaseMapper<User> {
-    @Select("SELECT * FROM t_user WHERE username = #{param.username} and create_time <= #{param.createTime}")
+
+    @Select("SELECT * FROM t_user WHERE (#{param.username} IS NULL OR username LIKE CONCAT('%', #{param.username}, '%')) AND (#{param.createTime} IS NULL OR create_time <= #{param.createTime})")
     PageModel<User> getPageList(@Param("page")IPage<?> page, @Param("param") UserPageParam userPageParam);
 }

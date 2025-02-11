@@ -5,7 +5,7 @@ println(project.name)
 
 plugins {
     java
-    id("org.springframework.boot") version "3.4.0"
+    id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
@@ -43,6 +43,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3")
     implementation("org.springframework.cloud:spring-cloud-starter-config")
@@ -75,6 +76,11 @@ dependencies {
     /** DB */
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.9")
     implementation("com.baomidou:mybatis-plus-jsqlparser:3.5.9")
+
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.16.1")
+
+    /** 对象存储 */
+    implementation("io.minio:minio:8.5.14")
 
     implementation("org.fusesource.jansi:jansi:2.4.1")
     compileOnly("org.projectlombok:lombok")

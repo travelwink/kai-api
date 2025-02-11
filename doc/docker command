@@ -1,0 +1,6 @@
+docker run -d \
+  --name mysql-kai \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -e TZ=Asia/Shanghai \
+  -p 3306:3306 \
+  mysql:9.1.0

@@ -1,8 +1,10 @@
 package com.travelwink.kai.system.param;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
 
@@ -20,4 +22,9 @@ public class SignUpParam implements Serializable {
     @Schema(description = "E-mail地址", example = "admin@example.com")
     @NotBlank(message = "E-mail地址不可为空")
     private String email;
+
+    @Schema(description = "验证码", example = "1AsL%d")
+    @Length(min = 6, max = 6, message = "无效的验证码长度")
+    @NotBlank(message = "验证码不可为空")
+    private String verifyCode;
 }

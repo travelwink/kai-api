@@ -1,5 +1,6 @@
 package com.travelwink.kai.system.controller;
 
+import com.travelwink.kai.framework.common.ApiResult;
 import com.travelwink.kai.framework.pagination.PageResult;
 import com.travelwink.kai.system.entity.User;
 import com.travelwink.kai.system.param.UserPageParam;
@@ -49,20 +50,20 @@ public class UserController {
     )
     @PostMapping("/create")
 //    @RequiresPermissions("sys:user:create")
-    public ResponseEntity<Boolean> create(@Validated @RequestBody User user) {
-        return ResponseEntity.ok(userService.createUser(user));
+    public ApiResult<Boolean> create(@Validated @RequestBody User user) {
+        return ApiResult.ok(userService.createUser(user));
     }
 
     @Operation(summary = "获取用户列表")
     @GetMapping("/getList")
 //    @RequiresPermissions("sys:user:list")
-    public ResponseEntity<List<User>> getList() {
-        return ResponseEntity.ok(userService.list());
+    public ApiResult<List<User>> getList() {
+        return ApiResult.ok(userService.list());
     }
 
     @Operation(summary = "获取用户分页列表")
     @PostMapping("/getPageList")
-    public ResponseEntity<PageResult<User>> getPageList(@RequestBody UserPageParam userPageParam) {
-        return ResponseEntity.ok(userService.getPageList(userPageParam));
+    public ApiResult<PageResult<User>> getPageList(@RequestBody UserPageParam userPageParam) {
+        return ApiResult.ok(userService.getPageList(userPageParam));
     }
 }

@@ -51,14 +51,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public User getByUsername(String username) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername, username);
-        User user = super.getOne(queryWrapper);
-        if (!ObjectUtils.isEmpty(user)) {
-            Set<String> roleIds = relUserRoleService.getRoleIdListByUserId(user.getId());
-            user.setRoleList(roleService.listByIds(roleIds));
-        } else {
-            throw new BusinessException("用户名不存在");
-        }
-        return user;
+        return super.getOne(queryWrapper);
     }
 
     @Override

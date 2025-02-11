@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.travelwink.kai.framework.common.BaseEntity;
 import com.travelwink.kai.framework.validator.groups.Create;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -41,6 +42,7 @@ public class User extends BaseEntity {
     @Schema(example = "John", description = "用户昵称")
     private String nickName;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Schema(description = "密码")
     @NotBlank(message = "密码不能为空", groups = {Create.class})
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z])(?=.*[a-z])(?=.*[^a-zA-Z0-9]).{8,16}$",

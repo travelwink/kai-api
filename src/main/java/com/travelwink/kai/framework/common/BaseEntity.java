@@ -2,6 +2,7 @@ package com.travelwink.kai.framework.common;
 
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.travelwink.kai.framework.validator.groups.Update;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -30,24 +31,25 @@ public class BaseEntity implements Serializable {
     @TableField(fill = FieldFill.INSERT)
     private String createdBy;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "创建时间")
     @Null(message = "创建时间不用传")
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "修改人")
     @TableField(fill = FieldFill.INSERT_UPDATE)
+    @Null(message = "修改人不用传")
     private String updatedBy;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description = "修改时间")
     @Null(message = "修改时间不用传")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updateTime;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Schema(description ="逻辑删除;0：未删除，1：已删除", defaultValue = "0")
     @Null(message = "逻辑删除不用传")
     @TableLogic
