@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.coyote.RequestInfo;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -28,7 +30,9 @@ public class RequestLogAspect {
         this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
     }
 
-    @Before("within(@org.springframework.web.bind.annotation.RestController *)")
+    private static final String EXECUTION_POINT_CUT = "execution(public * com.travelwink.kai..*.controller..*.*(..))";
+
+    @Before(EXECUTION_POINT_CUT)
     public void logRequest(JoinPoint joinPoint) {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         if (attributes != null) {
@@ -48,4 +52,19 @@ public class RequestLogAspect {
             }
         }
     }
+
+    @AfterThrowing(pointcut = EXECUTION_POINT_CUT, throwing = "exception")
+    public void afterThrowing(JoinPoint joinPoint, Exception exception) {
+
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        if (attributes != null) {
+            HttpServletRequest request = attributes.getRequest();
+            log.error("Controller Request - {} {}:\n{}\n",
+                    request.getMethod(),
+                    request.getRequestURI(),
+                    ansi().fg(RED).a(exception).reset());
+        }
+    }
+
+
 }
