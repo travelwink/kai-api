@@ -13,6 +13,7 @@ public class UserCache {
     @Id
     private String username;
 
+    // 连续登录失败次数
     private int consecutiveLoginFailures;
 
 }

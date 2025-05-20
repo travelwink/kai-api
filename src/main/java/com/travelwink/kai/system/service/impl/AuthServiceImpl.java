@@ -63,12 +63,13 @@ public class AuthServiceImpl implements AuthService {
         boolean isPasswordMatches = passwordEncoder.matches(param.getPassword(), user.getPassword());
         if (!isPasswordMatches) {
             int failureCount= userCacheService.incrementFailureCount(user.getUsername());
-            if (failureCount >= 15) {
+            int passwordAttemptCount = 6;
+            if (failureCount >= passwordAttemptCount) {
                 user.setStatus(AccountStatus.LOCKED.getCode());
                 userService.updateById(user);
                 throw new CredentialsExpiredException("登录失败尝试次数用尽");
             } else {
-                throw new CredentialsExpiredException("用户名密码错误，已尝试登录" + failureCount + "次");
+                throw new CredentialsExpiredException("用户名密码错误，已尝试登录失败" + failureCount + "次， 还有" + (passwordAttemptCount - failureCount) + "次尝试机会。");
             }
         }
         userCacheService.resetFailureCount(user.getUsername());
