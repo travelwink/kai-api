@@ -17,6 +17,12 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPoint authEntryPoint;
 
+    private final SecurityProperties securityProperties;
+
+    public SecurityConfig(SecurityProperties securityProperties) {
+        this.securityProperties = securityProperties;
+    }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
@@ -34,7 +40,7 @@ public class SecurityConfig {
 //            .formLogin(Customizer.withDefaults()) // 表单身份验证过滤器
             .authorizeHttpRequests(authorize -> authorize
 //                    .anyRequest().authenticated() // 授权过滤器
-                    .requestMatchers("/hello", "/signIn", "/signUp", "/user/*").permitAll()
+                    .requestMatchers(securityProperties.getIgnored().toArray(new String[0])).permitAll()
             )
             .exceptionHandling((exceptionHandling) -> {
                         exceptionHandling.authenticationEntryPoint(authEntryPoint);

@@ -30,7 +30,18 @@ springdoc:
   cache:
     disabled: true
 
+security:
+  ignored:
+    - /hello
+    - /signIn
+    - /signUp
+    - /user/**
+    - /error
+    - /static/**,/templates/**
+    - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
+
 ############################# spring common config end ###############################
+
 shiro:
   crypto:
     hash-algorithm: SHA-256
@@ -44,10 +55,14 @@ shiro:
   anon:
     - /hello
     - /login,/logout
-    - /static/**,/templates/**
+    - /static/**
+    - /templates/**
     - /error
-    - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
-
+    - /swagger-ui/**
+    - /swagger-resources/**
+    - /v3/api-docs/**
+    - /**
+############################# shiro config end ###############################
 
 spring:
   application:
