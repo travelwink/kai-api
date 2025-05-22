@@ -19,7 +19,7 @@ public class BaseEntity implements Serializable {
     private static final long serialVersionUID = -7176390653391227433L;
 
     @JsonIgnore
-    @Schema(description = "ID", minLength = 32)
+    @Schema(description = "唯一标识ID", minLength = 32, example = "UUID")
     @NotBlank(message = "ID不能为空", groups = {Update.class})
     @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;

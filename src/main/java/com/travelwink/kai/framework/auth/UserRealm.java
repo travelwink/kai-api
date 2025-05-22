@@ -1,5 +1,6 @@
 package com.travelwink.kai.framework.auth;
 
+import com.travelwink.kai.framework.properties.ShiroCryptoProperties;
 import com.travelwink.kai.system.entity.User;
 import com.travelwink.kai.system.service.*;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,8 @@ import java.util.Set;
 @Component
 public class UserRealm extends AuthorizingRealm {
 
+    private final ShiroCryptoProperties shiroCryptoProperties;
+
     @Autowired
     private UserService userService;
 
@@ -34,10 +37,20 @@ public class UserRealm extends AuthorizingRealm {
     @Autowired
     private RelRolePermissionService relRolePermissionService;
 
+    public UserRealm(ShiroCryptoProperties shiroCryptoProperties) {
+        this.shiroCryptoProperties = shiroCryptoProperties;
+    }
+
+    /**
+     * 获取授权信息(权限验证)
+     *
+     * @param principals the primary identifying principals of the AuthorizationInfo that should be retrieved.
+     * @return AuthorizationInfo 授权信息
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         // 获取用户名
-        String username =  principals.getPrimaryPrincipal().toString();
+        String username = principals.getPrimaryPrincipal().toString();
 
         // 查询用户角色和权限
         String userId = userService.getByUsername(username).getId();
@@ -55,12 +68,19 @@ public class UserRealm extends AuthorizingRealm {
 
     /**
      * 获取身份验证信息(登录验证)
-     * @param token the authentication token containing the user's principal and credentials.
+     * <p>
+     * <ol>
+     *     <li>从 token 的 principal 中获取 name </li>
+     *     <li>根据 username 查找数据库中的 User 实体</li>
+     *     <li>将token中的principal，数据库中User实体的密码、盐值，用户名组合生成简单验证信息</li>
+     * </ol>
+     *
+     * @param token 这个 AuthenticationToken 包含了 user 的主体 (principal) 和凭证 (credentials) .
      * @return AuthenticationInfo 验证信息
-     * @throws AuthenticationException AuthenticationException
+     * @throws UnknownAccountException 未知账号
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws UnknownAccountException {
         String name = token.getPrincipal().toString();
         User user = userService.getByUsername(name);
         if (ObjectUtils.isEmpty(user)) {
@@ -70,7 +90,7 @@ public class UserRealm extends AuthorizingRealm {
         return new SimpleAuthenticationInfo(
                 token.getPrincipal(),
                 user.getPassword(),
-                ByteSource.Util.bytes(user.getSalt()),
+                ByteSource.Util.bytes(user.getSalt() + shiroCryptoProperties.getSystemSalt()),
                 getName()
         );
     }

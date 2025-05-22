@@ -5,7 +5,7 @@ println(project.name)
 
 plugins {
     java
-    id("org.springframework.boot") version "3.4.0"
+    id("org.springframework.boot") version "3.4.5"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.asciidoctor.jvm.convert") version "3.3.2"
 }
@@ -30,7 +30,7 @@ repositories {
 }
 
 extra["snippetsDir"] = file("build/generated-snippets")
-extra["springBootAdminVersion"] = "3.4.0"
+extra["springBootAdminVersion"] = "3.4.5"
 extra["springCloudVersion"] = "2024.0.0"
 configurations.all {
     exclude(group = "commons-collections", module = "commons-collections")
@@ -49,7 +49,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
     // admin-client 包含 actuator
-//    implementation("de.codecentric:spring-boot-admin-starter-client")
+    implementation("de.codecentric:spring-boot-admin-starter-client")
 
     /** JWT */
 //	implementation("com.auth0:java-jwt:4.4.0")
@@ -59,16 +59,16 @@ dependencies {
 
     /** Apache Shiro */
     // springboot3 需要加 jakarta 来替换 javax
-	implementation("org.apache.shiro:shiro-core:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-web:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-spring:2.0.2:jakarta")
+	implementation("org.apache.shiro:shiro-core:2.0.4:jakarta")
+	implementation("org.apache.shiro:shiro-web:2.0.4:jakarta")
+	implementation("org.apache.shiro:shiro-spring:2.0.4:jakarta")
     // 加了下面这两个会与spring-boot-starter-actuator冲突
-	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.2:jakarta")
-	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.2:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-starter:2.0.4:jakarta")
+	implementation("org.apache.shiro:shiro-spring-boot-web-starter:2.0.4:jakarta")
     implementation("org.apache.commons:commons-collections4:4.4")
 
     /** API DOC */
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
     implementation("com.github.xiaoymin:knife4j-openapi3-jakarta-spring-boot-starter:4.5.0")
 
     /** DB */
@@ -98,11 +98,8 @@ dependencyManagement {
     }
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
 tasks.test {
+    useJUnitPlatform()
     outputs.dir(project.extra["snippetsDir"]!!)
 }
 

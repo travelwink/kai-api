@@ -1,6 +1,8 @@
 package com.travelwink.kai.system.controller;
 
+import com.travelwink.kai.framework.pagination.PageResult;
 import com.travelwink.kai.system.entity.User;
+import com.travelwink.kai.system.param.UserPageParam;
 import com.travelwink.kai.system.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,5 +59,12 @@ public class UserController {
     @RequiresPermissions("sys:user:list")
     public ResponseEntity<List<User>> getList() {
         return ResponseEntity.ok(userService.list());
+    }
+
+    @Operation(summary = "获取用户分页列表")
+    @PostMapping("/getPageList")
+    @RequiresPermissions("sys:user:page")
+    public ResponseEntity<PageResult<User>> getPageList(@RequestBody UserPageParam userPageParam) {
+        return ResponseEntity.ok(userService.getPageList(userPageParam));
     }
 }

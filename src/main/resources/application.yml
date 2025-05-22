@@ -13,41 +13,26 @@ springdoc:
   version: 3.1
   api-docs:
     version: openapi_3_1
+    path: /v3/api-docs
   swagger-ui:
+    path: /swagger-ui.html
     display-request-duration: true
-    groups-order: DESC
-    operationsSorter: method
+    groups-order: ASC
+    operationsSorter: none # method(default) path alpha none
     disable-swagger-default-url: true
     use-root-path: true
   show-actuator: true
   group-configs:
-    - group: Framework
-      paths-to-match: /login
-    - group: System
-      paths-to-match: /user/**
+    - group: Auth
+      paths-to-match: /signIn, /signOut, /signUp
     - group: Business
       paths-to-match: /biz
+    - group: System
+      paths-to-match: /user/**
   cache:
     disabled: true
 
 ############################# spring common config end ###############################
-shiro:
-  crypto:
-    hash-algorithm: SHA-256
-    hash-iterations: 3
-  loginUrl: /login
-  # Let Shiro Manage the sessions
-  userNativeSessionManager: true
-  # disable URL session rewriting
-  sessionManager:
-    sessionIdUrlRewritingEnabled: false
-  anon:
-    - /hello
-    - /login,/logout
-    - /static/**,/templates/**
-    - /error
-    - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
-
 
 spring:
   application:
@@ -71,3 +56,29 @@ spring:
 logging:
   file:
     name: logs/${spring.application.name}.log
+
+############################# spring boot starter config end ###############################
+
+shiro:
+  crypto:
+    hash-algorithm: SHA-256
+    hash-iterations: 3
+    system-salt: kaiSecretKey
+  loginUrl: /signIn
+  # Let Shiro Manage the sessions
+  userNativeSessionManager: true
+  # disable URL session rewriting
+  sessionManager:
+    sessionIdUrlRewritingEnabled: false
+  anon:
+    - /hello
+    - /signUp,/signIn,/signOut
+    - /static/**,/templates/**
+    - /error
+    - /swagger-ui/**,/swagger-resources/**,/v3/api-docs/**
+    - /user/**
+
+############################# shiro config end ###############################
+
+mybatis-plus:
+  type-enums-package: com.travelwink.kai.framework.enums
