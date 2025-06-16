@@ -2,12 +2,8 @@ server:
   port: 8808
   servlet:
     context-path: /api
-management:
-  endpoints:
-    web:
-      base-path: /rest/actuator
-      exposure:
-        include: '*'
+
+############################# basic config end ###############################
 
 springdoc:
   version: 3.1
@@ -32,19 +28,35 @@ springdoc:
   cache:
     disabled: true
 
-############################# spring common config end ###############################
+############################# springdoc config end ###############################
 
 spring:
   application:
     name: kai
+  config:
+    import:
+      - nacos:${spring.application.name}.yaml
   profiles:
-    default: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev}
   output:
     ansi:
       enabled: always
   cloud:
     config:
       enabled: false
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        namespace: travelwink-${spring.profiles.active}
+        username: nacos
+        password: nacos
+      config:
+        server-addr: ${NACOS_SERVER_ADDR:localhost:8848}
+        namespace: travelwink-${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yaml
+        username: nacos
+        password: nacos
   redis:
     jedis:
       pool:
@@ -53,11 +65,15 @@ spring:
         max-idle: 8
         min-idle: 0
         time-between-eviction-runs: 5000
-logging:
-  file:
-    name: logs/${spring.application.name}.log
 
-############################# spring boot starter config end ###############################
+management:
+  endpoints:
+    web:
+      base-path: /rest/actuator
+      exposure:
+        include: '*'
+
+############################# spring config end ###############################
 
 shiro:
   crypto:
@@ -82,3 +98,7 @@ shiro:
 
 mybatis-plus:
   type-enums-package: com.travelwink.kai.framework.enums
+
+logging:
+  file:
+    name: logs/${spring.application.name}.log

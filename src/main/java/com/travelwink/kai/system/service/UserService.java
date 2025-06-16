@@ -19,7 +19,7 @@ public interface UserService extends IService<User> {
      * 方法逻辑步骤
      * <ol>
      *     <li>验证用户名</li>
-     *     <li>密码加密</li>
+     *     <li>密码加盐加密</li>
      *     <li>分配默认角色&权限</li>
      * </ol>
      *

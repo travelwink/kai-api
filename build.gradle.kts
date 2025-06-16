@@ -51,6 +51,11 @@ dependencies {
     // admin-client 包含 actuator
     implementation("de.codecentric:spring-boot-admin-starter-client")
 
+    /** Nacos */
+    implementation("com.alibaba.cloud:spring-cloud-alibaba-dependencies:2023.0.3.2")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2") // 服务发现
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2") // 配置中心
+
     /** JWT */
 //	implementation("com.auth0:java-jwt:4.4.0")
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
@@ -58,7 +63,7 @@ dependencies {
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.12.6")
 
     /** Apache Shiro */
-    // springboot3 需要加 jakarta 来替换 javax
+    // spring-boot3 需要加 jakarta 来替换 javax
 	implementation("org.apache.shiro:shiro-core:2.0.4:jakarta")
 	implementation("org.apache.shiro:shiro-web:2.0.4:jakarta")
 	implementation("org.apache.shiro:shiro-spring:2.0.4:jakarta")
@@ -110,5 +115,10 @@ tasks.asciidoctor {
 
 tasks.withType<BootRun> {
     systemProperty("spring.profiles.active", "prod")
+}
+
+// 禁用普通JAR生成
+tasks.jar {
+    enabled = false
 }
 
