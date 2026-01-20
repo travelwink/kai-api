@@ -31,5 +31,6 @@ public class PrintApplicationInfo {
         log.info("Access URL: http://127.0.0.1:{}{}", serverPort, contextPath);
         log.info("Swagger: http://127.0.0.1:{}{}/swagger-ui/index.html", serverPort, contextPath);
         log.info("Knife4j: http://127.0.0.1:{}{}/doc.html", serverPort, contextPath);
+        log.info("Camunda App: http://127.0.0.1:{}{}/camunda/app/welcome/default/#!/login", serverPort, contextPath);
     }
 }

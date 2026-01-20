@@ -5,13 +5,59 @@ spring:
       port: 6379
       database: 0
       password: root
+  neo4j:
+    uri: bolt://172.24.228.121:7687
+    authentication:
+      username: neo4j
+      password: CS6sp9sI3V2tzduD
+    driver:
+      config:
+        encryption.enabled: true
+        trust-all-certificates: true
+        connection-timeout: 30s
+
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/kai?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    dynamic:
+      primary: postgres
+      grace-destroy: false
+      datasource:
+        postgres:
+          driver-class-name: org.postgresql.Driver
+          url: jdbc:postgresql://localhost:5432/camunda_db
+          username: camunda
+          password: camunda
+        mysql:
+          driver-class-name: com.mysql.cj.jdbc.Driver
+          url: jdbc:mysql://localhost:3306/camunda?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true
+          username: root
+          password: root
+
+# Camunda 配置
+camunda:
+  bpm:
+    process-engine:
+      config:
+        # 全局默认历史数据存活时间（单位：小时），所有未单独配置TTL的流程均使用该值
+        default-history-time-to-live: 48
+        # 可选：指定历史级别（默认audit，不影响TTL配置，仅补充参考）
+        history: audit
+    # 默认用户（用于登录Web控制台）
+    admin-user:
+      id: admin
+      password: admin
+      first-name: Admin
+    filter:
+      create: All tasks
+    # 开启所有Web App（Cockpit/Tasklist/Admin）
+    webapp:
+      enabled: true
 
 # 打印SQL语句和结果集，本地开发环境可开启，线上注释掉
 mybatis-plus:
   configuration:
+    map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    org.neo4j.driver: DEBUG # 开启Neo4j驱动日志，查看连接过程
